@@ -4,7 +4,7 @@ from utils import extract_route, read_file
 from views import index
 
 CUR_DIR = Path(__file__).parent
-SERVER_HOST = '0.0.0.0'
+SERVER_HOST = 'localhost'
 SERVER_PORT = 8080
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,7 +27,9 @@ while True:
     if filepath.is_file():
         response = read_file(filepath)
     elif route == '':
-        response = index()
+        if request.split()[0] == 'POST' and len(request.split("\n\n")) == 1:
+            request += client_connection.recv(1024).decode()
+        response = index(request)
     else:
         response = bytes()
 

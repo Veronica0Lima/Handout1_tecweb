@@ -27,3 +27,16 @@ def load_template(name):
     content = file.read()
     file.close()
     return content 
+
+def send_data(dic):
+    path = './data/notes.json'
+    file = open(path, 'r')
+    content0 = file.read()
+    content0 = json.loads(content0)
+    file.close()
+
+    content0.append(dic)
+
+    file = open(path, 'w')
+    file.write(json.dumps(content0))
+    file.close()
