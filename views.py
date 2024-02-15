@@ -9,7 +9,6 @@ def index(request):
         # Cabeçalho e corpo estão sempre separados por duas quebras de linha
         partes = request.split('\n\n')
         corpo = partes[1]
-        print('------------------------------',corpo)
         params = {}
      
         for chave_valor in corpo.split('&'):
@@ -28,5 +27,7 @@ def index(request):
     ]
     notes = '\n'.join(notes_li)
 
+    if request.startswith('POST'):
+            return build_response(code=303, reason='See Other', headers='Location: /',body=load_template('index.html').format(notes=notes)) 
 
-    return build_response() + load_template('index.html').format(notes=notes).encode()
+    return build_response(body=load_template('index.html').format(notes=notes)) 

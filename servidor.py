@@ -27,8 +27,9 @@ while True:
     if filepath.is_file():
         response = build_response() + read_file(filepath)
     elif route == '':
-        if request.split()[0] == 'POST' and len(request.split("\n\n")) == 1:
-            request += client_connection.recv(1024).decode()
+        if len(request.split())>0: 
+            if request.split()[0] == 'POST' and len(request.split("\n\n")) == 1:
+                request += client_connection.recv(1024).decode()
         response = index(request)
     else:
         response = build_response()
